@@ -1,7 +1,8 @@
 state("GenshinImpact")
 {
-    bool loading : "UserAssembly.dll", 0x0613CDC0, 0x358, 0x70, 0x2B8;
+    int state : "UserAssembly.dll", 0x061FFEF0, 0xA0, 0x2D0;
 }
+
 startup
 {
     if (timer.CurrentTimingMethod == TimingMethod.RealTime)
@@ -19,12 +20,34 @@ startup
             timer.CurrentTimingMethod = TimingMethod.GameTime;
         }
     }
+
+    vars.setStartTime = false;
+}
+
+start
+{
+    if(current.state == 1 && old.state != 1)
+    {
+        print("test");
+        vars.setStartTime = true;
+        return true;
+    }
 }
 
 isLoading
 {
-    return current.loading;
+    return current.state != 1;
 }
+
+gameTime
+{
+    if(vars.setStartTime)
+    {
+        vars.setStartTime = false;
+        return TimeSpan.FromSeconds(-34.10);
+    }
+}
+
 exit
 {
     timer.IsGameTimePaused = true;
