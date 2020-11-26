@@ -1,6 +1,6 @@
 state("GenshinImpact")
 {
-    int state : "UserAssembly.dll", 0x06B14270, 0xA0, 0x2D0;
+    int state : "UserAssembly.dll", 0x06B6C668, 0xF0, 0x148, 0x88;
 }
 
 startup
@@ -52,3 +52,4 @@ exit
 {
     timer.IsGameTimePaused = true;
 }
+
