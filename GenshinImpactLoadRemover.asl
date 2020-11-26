@@ -1,6 +1,6 @@
 state("GenshinImpact")
 {
-    int state : "UserAssembly.dll", 0x6202F88, 0xA0, 0x2D0;
+    int state : "UserAssembly.dll", 0x06B6C668, 0xA0, 0x2D0;
 }
 
 startup
