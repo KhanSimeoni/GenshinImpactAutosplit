@@ -1,6 +1,7 @@
 state("GenshinImpact")
 {
-    int state : "UserAssembly.dll", 0xB6C668, 0xF0, 0x148, 0x118;
+    int gameStart : "UserAssembly.dll", 0x06B6C668, 0xF0, 0x148, 0x88; 
+    int loadBit : "UserAssembly.dll", 0x06B6C668, 0xF0, 0x148, 0x118;
 }
 
 startup
@@ -20,23 +21,35 @@ startup
             timer.CurrentTimingMethod = TimingMethod.GameTime;
         }
     }
-
     vars.setStartTime = false;
+    vars.loading = true;
 }
 
 start
 {
-    if(current.state == 1 && old.state != 1)
+    if(current.gameStart == old.gameStart+1 && !vars.loading) //End of first loading screen
     {
-        print("test");
         vars.setStartTime = true;
         return true;
     }
 }
 
+update
+{
+    if (current.loadBit == 0 && old.loadBit == 1) //Start of load
+    {
+        vars.loading = true;
+    }
+    if (current.loadBit == 1 && old.loadBit == 0) //End of load
+    {
+        vars.loading = false;
+    }
+    return true;
+}
+
 isLoading
 {
-    return current.state != 1;
+    return vars.loading;
 }
 
 gameTime
@@ -52,4 +65,3 @@ exit
 {
     timer.IsGameTimePaused = true;
 }
-
