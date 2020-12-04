@@ -36,11 +36,11 @@ start
 
 update
 {
-    if (current.loadBit == 0 && old.loadBit == 1) //Start of load
+    if (current.loadBit == old.loadBit + 1) //Start of load
     {
         vars.loading = true;
     }
-    if (current.loadBit == 1 && old.loadBit == 0) //End of load
+    if (current.loadBit == old.loadBit - 1) //End of load
     {
         vars.loading = false;
     }
